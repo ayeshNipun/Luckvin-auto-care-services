@@ -1,0 +1,165 @@
+
+<div class="container-fluid">
+  
+  <div class="row">
+    <div class="col-md-2" style="background-color:rgb(2, 12, 22);height:auto" >
+    <app-sidenav ></app-sidenav>
+    </div>
+  
+    <div class="col-md-10">
+        <br>
+        <p class="border-bottom"><b>Dashboard/</b>Reserve service date</p>
+    <div class="row">
+        <div class="col-md-6">
+         
+          <form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
+             
+            <div>
+              <label for="" class="d-block p-2 bg-info text-white">select the vehicle</label>
+             <select  id="vehiclereg" class="form-control"  name="vehiclereg"  [(ngModel)]='vehiclereg' >
+               <option value="{{vehicle.Reg_no}}" *ngFor="let vehicle of vehicle$ | async ">{{vehicle.Reg_no}}</option>
+             </select>
+            </div>
+            
+            <br>
+            <div>
+                <label for="" class="d-block p-2 bg-info text-white">select date</label>
+               <input type="date" class="form-control" [(ngModel)]='resdate' name="resdate" id="resdate" (ngModelChange)="selectdate()">
+              </div>
+              <div [hidden]="showremaining"><p style="color:white;height:50px" class="bg-success">only {{remaining}} reservation slots are left .place your reservation now to secure the slot</p></div>
+              <div [hidden]="showunavailability"><p style="color:white;height:50px" class="bg-danger">we have got all the reservation slots reserved for today .feel free to try another date.sorry for
+              the inconviniene</p></div>
+              <br> 
+            <div class="d-block p-2 bg-info text-white">Here are our car washing packages select one of the followings</div>
+            
+            <hr>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="defaultUnchecked" name="defaultExampleRadios" value="quickwash" [(ngModel)]='bodywash' (ngModelChange)="carwashpackagepayement()">
+              <label class="custom-control-label" for="defaultUnchecked"><b>QUICK WASH</b> – Body wash, and tyre dressing (15 Minutes)</label>
+            </div>
+            
+            <br>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="defaultUnchecked2" name="defaultExampleRadios" value="detailedwash" [(ngModel)]='bodywash'  (ngModelChange)="carwashpackagepayement()" > 
+              <label class="custom-control-label" for="defaultUnchecked2"><b>DETAILED WASH</b> – Body wash, carpet wash, glass cleaning, dash cleaning and tyre dressing (30 Minutes)</label>
+            </div>
+            <br>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="defaultUnchecked3" name="defaultExampleRadios" [(ngModel)]='bodywash' value="washwax"  (ngModelChange)="carwashpackagepayement()">
+              <label class="custom-control-label" for="defaultUnchecked3"><b>WASH & WAX </b>  - Body wash, carpet wash, glass cleaning, tyre dressing, interior vacuuming, and 3M wax (45 Minutes)
+              </label>
+            </div>
+            
+            <br>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="defaultUnchecked4" name="defaultExampleRadios" [(ngModel)]='bodywash' value="autowash"  (ngModelChange)="carwashpackagepayement()"> 
+              <label class="custom-control-label" for="defaultUnchecked4"><b>AUTO WASH </b>– Body wash, under wash, carpet wash, glass cleaning and interior vacuuming (20 Minutes)
+              </label>
+            </div>
+            <br>
+            <div class="d-block p-2 bg-info text-white">Interior detailing</div> 
+            <br>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="interior" name="interior" [(ngModel)]="interior" (click)="changeInterior()" value="interior detailing" >
+                <label class="custom-control-label" for="interior"><b>INTERIOR DETAILING </b>involves a deep cleaning of the whole interior cabin of the automobile. </label>
+            </div>
+              <br>  
+              
+          
+            
+            
+            <div class="d-block p-2 bg-info text-white">Lubrication service</div> 
+            <br>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="lubrication1" name="lubrication1" [(ngModel)]="lubrication1" (click)="changecardInfo()" >
+                <label class="custom-control-label" for="lubrication1"><b>LUBRICATION</b> </label>
+                
+            </div>
+            
+            <br>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="undercariagedegrease" name="undercariagedegrease" [(ngModel)]="undercariagedegrease" (click)="changetoundercariage()">
+                <label class="custom-control-label" for="undercariagedegrease"><b>UNDERCARRIAGE DEGREASING</b> </label>
+            </div>
+            
+            <br>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="tyredashdress" name="tyredashdress" [(ngModel)]="tyredashdress" (click)="changetyredress()">
+                <label class="custom-control-label" for="tyredashdress"><b>TYRE & DASH DRESSING</b></label>
+            </div>
+            
+            <br>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="exteriorwax" name="exteriorwax" [(ngModel)]="exteriorwax" (click)="changeExteriorax()" >
+                <label class="custom-control-label" for="exteriorwax"><b>EXTERIOR WAXING </b> </label>
+            </div>
+          
+            <br>
+            <div class="d-block p-2 bg-info text-white">Other specialized services</div> 
+            <br>  
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="engine_oil_and_filter_change" name="engine_oil_and_filter_change" [(ngModel)]="engine_oil_and_filter_change" (click)="changeengineOilFilter()" >
+                <label class="custom-control-label" for="engine_oil_and_filter_change"><b>Engine Oil and Filter Change</b>  </label>
+            </div>
+            
+            <br>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="engineclean" [(ngModel)]="engineclean" name="engineclean" (click)="EngineCleaning()" > 
+                <label class="custom-control-label" for="engineclean"><b>Engine Cleaning</b> </label>
+            </div>
+           
+            <br>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="flushreplace" name="flushreplace" [(ngModel)]="flushreplace" (click)="RadiatorcoolerntReplace()" >
+                <label class="custom-control-label" for="flushreplace"><b>Radiator Coolant Flush and Replacement</b></label>
+            </div>
+            
+            <br>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="enginescan" name="enginescan" [(ngModel)]="enginescan" (click)="EngineScan()" >
+                <label class="custom-control-label" for="enginescan"><b>Engine Scanning</b> </label>
+            </div>
+           <br>
+            <div>
+              <button type="submit" class="btn btn-success" [disabled]="formvalidity">RESERVE THE DATE</button>
+            </div>
+          </form>
+        </div>
+        
+        <div class="col-md-6">
+          <!-- Card -->
+<div class="card" style=" position: -webkit-sticky;
+position: sticky;
+top:30px;margin-left:70px;width:430px">
+
+  <!-- Card image -->
+  <img class="card-img-top" style="height:270px;width:430px" src="{{imgsrc}}">
+
+  <!-- Card content -->
+  <div class="card-body">
+
+    <!-- Title -->
+    <h4 class="card-title"><a>{{cardtitle}}</a></h4>
+    <!-- Text -->
+    <p class="card-text">{{textservice}}</p>
+    <p style="color:darkblue"><b>Charges LKR {{price}}.00</b> </p>
+    <p>these charges are only for the services you will have to pay for additional lubricants or other materials</p>
+    <!-- Button -->
+  
+            <!-- Card -->
+<div class="card" >
+<h4>Total payement:LKR {{totalpayment}}.00</h4>
+
+</div>
+
+</div>
+<!-- Card -->
+        </div>
+    
+    </div>
+
+
+
+    </div>
+</div>
+</div>

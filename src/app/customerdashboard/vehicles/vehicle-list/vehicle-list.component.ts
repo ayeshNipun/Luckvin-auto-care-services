@@ -17,10 +17,12 @@ import { Router } from "@angular/router";
 })
 export class VehicleListComponent implements OnInit {
 list:Vehicle[];
+list2:[];
 usersCustomerId='';
 VehicleId='';
 alertdel=true;
-alertreg=true;
+testid='';
+
   constructor(private service: VehicleService,
     private firestore:AngularFirestore,
     private toastr:ToastrService,
@@ -31,8 +33,35 @@ alertreg=true;
   public afs: AngularFirestore,   // Inject Firestore service
   private router: Router,
   private af: AuthService,) {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.usersCustomerId = user.uid;
+        }
+    }) 
     
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.usersCustomerId = user.uid;
+        } 
+    }) 
+    
+    this.service.getVehicles().subscribe(actionArray => {
+      
+      
+
+      this.list = actionArray.map(item=>{
+         return { 
+           id: item.payload.doc.id,
+           ...item.payload.doc.data()
+         } as Vehicle
+     
+       })
+       
+      
+      
+     });
    
+    
    }
 
   ngOnInit() {
@@ -43,13 +72,22 @@ alertreg=true;
     }) 
     
     this.service.getVehicles().subscribe(actionArray => {
-     this.list = actionArray.map(item=>{
-        return { 
-          id: item.payload.doc.id,
-          ...item.payload.doc.data()
-        } as Vehicle
-      })
-    });
+      
+      
+
+      this.list = actionArray.map(item=>{
+         return { 
+           id: item.payload.doc.id,
+           ...item.payload.doc.data()
+         } as Vehicle
+         
+       })
+      
+       
+      
+     });
+
+  
     
   
   }
@@ -61,7 +99,7 @@ alertreg=true;
 
   onDelete(id :string ){
     if(confirm("Are yousure to delete the vehicle")){
-      this.firestore.firestore.doc('users/' +this.usersCustomerId ).collection('vehicles').doc(id).delete();
+      this.firestore.firestore.collection('vehicles').doc(id).delete();
       this.toastr.warning('delete successfully');
       this.alertdel=false;
 

@@ -27,12 +27,22 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { QRCodeModule } from 'angularx-qrcode';  
 import { HttpClientModule } from '@angular/common/http';
-import {  ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { GenerateqrComponent } from './servicestation/generateqr/generateqr.component'; 
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
-import { LubricantsComponent } from './customerdashboard/lubricants/lubricants.component';
-
-
+import { BookingComponent } from './customerdashboard/booking/booking.component';
+import { NgQrScannerModule } from 'angular2-qrscanner';
+import { QrscannerComponent } from './qrscanner/qrscanner.component';
+import { ServicebookingService} from './shared/servicebooking.service';
+import { ConfirmVehicleregistrationComponent } from './admim/confirm-vehicleregistration/confirm-vehicleregistration.component';
+import { SidenavadminComponent } from './sidenavadmin/sidenavadmin.component';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AdminComponent } from './admindashboard/admin/admin.component';
+import { SidenavAdminComponent } from './sidenav-admin/sidenav-admin.component';
+import { PayementupdateComponent } from './admindashboard/payementupdate/payementupdate.component';
+import { LicenseComponent } from './license/license.component';
+import { LicenceTypeComponent } from './licence-type/licence-type.component';
+import { ConfirmvehicleregComponent } from './admindashboard/confirmvehiclereg/confirmvehiclereg.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +60,16 @@ import { LubricantsComponent } from './customerdashboard/lubricants/lubricants.c
     VehicleComponent,
     VehicleListComponent,
     GenerateqrComponent,
-    LubricantsComponent,
+    BookingComponent,
+    QrscannerComponent,
+    ConfirmVehicleregistrationComponent,
+    SidenavadminComponent,
+    AdminComponent,
+    SidenavAdminComponent,
+    PayementupdateComponent,
+    LicenseComponent,
+    LicenceTypeComponent,
+    ConfirmvehicleregComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,9 +83,11 @@ import { LubricantsComponent } from './customerdashboard/lubricants/lubricants.c
     BrowserAnimationsModule, 
     QRCodeModule,
     ZXingScannerModule,
-    ToastrModule.forRoot()
+    NgQrScannerModule,
+    ToastrModule.forRoot(),
+    AngularFireDatabaseModule,
   ],
-  providers: [AuthService,VehicleService],
+  providers: [AuthService,VehicleService,ServicebookingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

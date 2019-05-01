@@ -2,17 +2,17 @@
   <!-- Sidebar navigation -->
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-3" style="background-color:rgb(2, 12, 22);height:600px">
+      <div class="col-md-2" style="background-color:rgb(2, 12, 22);height:600px">
       <app-sidenav></app-sidenav>
       </div>
-    <div class="col-md-9">
+    <div class="col-md-10">
        <!-- Main content -->
 <main role="main" class="  px-4">
     <div class="inner-adjust">
 
       <div class="pt-3 pb-2 mb-3 ">
         
-       <p class="border-bottom"><b>Dashboard/</b>customer profile</p>
+        <p class="border-bottom"><b>Dashboard/</b>customer profile</p>
       </div>
       <!-- Show user data when logged in -->
       <div class="row" *ngIf="authService.userData as user">
@@ -29,6 +29,8 @@
           </div>
         </div>
       </div>
+
+      
 
     </div>
   </main>
