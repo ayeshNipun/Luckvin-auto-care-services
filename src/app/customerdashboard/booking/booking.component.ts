@@ -23,7 +23,9 @@ vehicleref:AngularFirestoreCollection<Vehicle>;
 vehicle$:Observable<Vehicle[]>;
 vehiclestatus:BehaviorSubject<string>;
 currentpriceref:AngularFirestoreCollection<Payements>;
-  currentprice$:Observable<Payements[]>;
+currentprice$:Observable<Payements[]>;
+vehicletyperef:AngularFirestoreCollection<Vehicle>;
+vehicletype$:Observable<Vehicle[]>;
 
 resdate='';
 defaultExampleRadios='';
@@ -42,6 +44,7 @@ textservice='welcome to luckvin auto care systems online reservation page';
 cardtitle='Luckvin Auto Care Services';
 reservedateref:AngularFirestoreCollection<Servicebooking>;
 reservedate$:Observable<Servicebooking[]>;
+
 formvalidity=false;
 remaining=0;
 showremaining=true;
@@ -51,6 +54,9 @@ vehicles=[];
 carashpackageprice=0;
 bodywash='';
 price=0;
+tp='';
+vtype="";
+id1='';
   constructor(
   private service: VehicleService,
   private firestore:AngularFirestore,
@@ -80,7 +86,7 @@ price=0;
     if (user) {
       this.usersCustomerId = user.uid;
       console.log(this.usersCustomerId );
-      this.vehicleref= this.afs.collection('vehicles',ref=>ref.where('userid','==',this.usersCustomerId).where('status','==','unconfirmed'));
+      this.vehicleref= this.afs.collection('vehicles',ref=>ref.where('userid','==',this.usersCustomerId).where('status','==','confirmed'));
    
  
       // this.vehicleref=this.afs.doc('users/'+this.usersCustomerId).collection('vehicles',ref=>ref.where('status','==','unconfirmed'))
@@ -93,7 +99,16 @@ price=0;
 
   
   }
-
+  selectvehicletype(){
+    console.log(this.vehiclereg);
+    this.vehicletyperef=this.afs.collection('vehicles',ref=>ref.where('userid','==',this.usersCustomerId).where('status','==','confirmed').where('Reg_no','==',this.vehiclereg))
+    this.vehicletype$=this.vehicletyperef.valueChanges();
+    this.vehicletype$.subscribe(val=>{
+      this.vtype=val[0].vehicle_type;
+    })
+    // return this.vtype;
+    return this.vtype;
+  }
   getvehicles(){
     console.log(this.usersCustomerId);
     this.vehicleref=this.afs.collection('users').doc('this.usersCustomerId ').collection('vehicles')
@@ -110,7 +125,7 @@ price=0;
   }
  
   changecardInfo(){
-    this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==','001'));
+    this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==',this.selectvehicletype()));
     this.currentprice$=this.currentpriceref.valueChanges();
     this. currentprice$.subscribe(val => {
       if(this.lubrication1){
@@ -128,7 +143,7 @@ price=0;
    }
 
    changetoundercariage(){
-    this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==','001'));
+    this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==',this.selectvehicletype()));
     this.currentprice$=this.currentpriceref.valueChanges();
     this. currentprice$.subscribe(val => {
       if(this.undercariagedegrease){
@@ -146,7 +161,7 @@ price=0;
     
   }
    changetyredress(){
-    this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==','001'));
+    this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==',this.selectvehicletype()));
     this.currentprice$=this.currentpriceref.valueChanges();
     this. currentprice$.subscribe(val => {
       if(this.tyredashdress){
@@ -163,7 +178,7 @@ price=0;
     
   }
    changeExteriorax(){
-    this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==','001'));
+    this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==',this.selectvehicletype()));
     this.currentprice$=this.currentpriceref.valueChanges();
     this. currentprice$.subscribe(val => {
       if(this.exteriorwax){
@@ -180,7 +195,7 @@ price=0;
    
   }
    changeInterior(){
-    this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==','001'));
+    this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==',this.selectvehicletype()));
     this.currentprice$=this.currentpriceref.valueChanges();
     this. currentprice$.subscribe(val => {
       if(this.interior){
@@ -198,7 +213,7 @@ price=0;
   }
 // photoes have to be updated
     changeengineOilFilter(){
-      this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==','001'));
+      this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==',this.selectvehicletype()));
       this.currentprice$=this.currentpriceref.valueChanges();
       this. currentprice$.subscribe(val => {
         if(this.engine_oil_and_filter_change){
@@ -215,7 +230,7 @@ price=0;
    
   }
     EngineCleaning(){
-      this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==','001'));
+      this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==',this.selectvehicletype()));
       this.currentprice$=this.currentpriceref.valueChanges();
       this. currentprice$.subscribe(val => {
         if(this.engineclean){
@@ -232,7 +247,7 @@ price=0;
     
   }
     RadiatorcoolerntReplace(){
-      this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==','001'));
+      this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==',this.selectvehicletype()));
       this.currentprice$=this.currentpriceref.valueChanges();
       this. currentprice$.subscribe(val => {
         if(this.flushreplace){
@@ -249,7 +264,7 @@ price=0;
     
   }
     EngineScan(){
-      this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==','001'));
+      this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==',this.selectvehicletype()));
       this.currentprice$=this.currentpriceref.valueChanges();
       this. currentprice$.subscribe(val => {
         if(this.enginescan){
@@ -268,7 +283,7 @@ price=0;
       
     }
     carwashpackagepayement(){
-      this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==','001'));
+      this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==',this.selectvehicletype()));
       this.currentprice$=this.currentpriceref.valueChanges();
       this.totalpayment=this.totalpayment-this.carashpackageprice;
       console.log(this.bodywash)
@@ -353,6 +368,7 @@ price=0;
       enginescan:false,
       vehiclereg:'',
       status:'',
+      tp:'',
      }
   
      
@@ -360,8 +376,14 @@ price=0;
     }
 
     onSubmit(form:NgForm){
+      this.afAuth.authState.subscribe(user => {
+        if (user) {
+          this.usersCustomerId = user.uid;
+          } 
+      }) 
       let data=form.value;
       data.status='ongoing';
+      data.customerid=this.usersCustomerId; 
       this.firestore.collection('service').add(data);
       this.resetForm();
       this.toastr.success('Luckvin Auto care','your reservation has been succussfully placed')  

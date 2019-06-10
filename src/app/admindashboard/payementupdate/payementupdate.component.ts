@@ -35,6 +35,9 @@ export class PayementupdateComponent implements OnInit {
   enginescan=0;
   currentpriceref:AngularFirestoreCollection<Payements>;
   currentprice$:Observable<Payements[]>;
+  
+  vehicle_type='';
+  vehicleselect='';
   constructor(
     private firestore:AngularFirestore,
     private toastr: ToastrService,
@@ -45,30 +48,14 @@ export class PayementupdateComponent implements OnInit {
     private af: AuthService,
     private service1 : PriceupdateService,
 
-  ) { }
+  ) { 
+
+  }
 
   ngOnInit() {
-    this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==','001'));
-      this.currentprice$=this.currentpriceref.valueChanges();
 
-      this. currentprice$.subscribe(val => {
-        this.quickwash=val[0].quickwash,
-        this.autowash=val[0].autowash,
-        this.detailledwash=val[0].detailledwash,
-        this.washandax=val[0].washandax,
-        this.interior=val[0].interior,
-        this.lubrication=val[0].lubrication,
-        this.undercariagedegrease=val[0].undercariagedegrease,
-        this.tyredashdress=val[0].tyredashdress,
-        this.exteriorwax=val[0].exteriorwax,
-        this.engine_oil_and_filter_change=val[0].engine_oil_and_filter_change,
-        this.engineclean=val[0].engineclean,
-        this.flushreplace=val[0].flushreplace,
-        this.enginescan=val[0].enginescan,
-
-        console.log(val[0]);
-  })
 }
+  
   resetForm(form ? :NgForm){
     if(form != null)
       form.resetForm();
@@ -96,15 +83,61 @@ export class PayementupdateComponent implements OnInit {
   
     }
 
+    selectvehicletype(){
+      this.vehicleselect=this.vehicle_type;
+      console.log("working");
+      this.currentpriceref=this.afs.collection('prices',ref=>ref.where('identifier','==',this.vehicleselect));
+      this.currentprice$=this.currentpriceref.valueChanges();
+  
+      this. currentprice$.subscribe(val => {
+        this.quickwash=val[0].quickwash,
+        this.autowash=val[0].autowash,
+        this.detailledwash=val[0].detailledwash,
+        this.washandax=val[0].washandax,
+        this.interior=val[0].interior,
+        this.lubrication=val[0].lubrication,
+        this.undercariagedegrease=val[0].undercariagedegrease,
+        this.tyredashdress=val[0].tyredashdress,
+        this.exteriorwax=val[0].exteriorwax,
+        this.engine_oil_and_filter_change=val[0].engine_oil_and_filter_change,
+        this.engineclean=val[0].engineclean,
+        this.flushreplace=val[0].flushreplace,
+        this.enginescan=val[0].enginescan,
+  
+        console.log(val[0]);
+  })
+  
+    }
+  
   onSubmit(form:NgForm){
     let data=form.value;
-    const id1='YYWQV1uxhqEac1vpRZYl';
-    // this.firestore.collection('prices').add(data)
+    let id1=''
+    console.log(this.vehicle_type)
+    if(this.vehicle_type==="motorcycle"){
+      id1='w2mlQtiF78oxElTWt2RJ';
+    }
+    else if(this.vehicle_type==="Medium Rigid (MR class) heavy vehicle"){
+      id1='YYWQV1uxhqEac1vpRZYl';
+    }
+    else if(this.vehicle_type==="Special tractor "){
+      id1='PhJo7ovNAGez8yk8HDim';
+    }
+    else if(this.vehicle_type==="Light Rigid (LR class) heavy vehicle"){
+      id1='m4cjlkMJsZGZzxhcG3xo';
+    }
+    else if(this.vehicle_type==="threewheeler"){
+      id1='qdNdFf75RWExeMRFFXY8';
+    }
+    else if(this.vehicle_type==="Car (C class) licence"){
+      id1='yXsWARCThwxXupnAiX3M';
+    }
+    console.log(id1)
+    
      this.firestore.firestore.collection('prices').doc(id1).update(data);
-    this.resetForm();
-    this.toastr.success('Luckvin Auto care','prices has been successfully updated')  
+     this.resetForm();
+     this.toastr.success('Luckvin Auto care','prices has been successfully updated')  
   }
-
+  
 }
 
    

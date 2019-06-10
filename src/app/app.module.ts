@@ -43,7 +43,16 @@ import { PayementupdateComponent } from './admindashboard/payementupdate/payemen
 import { LicenseComponent } from './license/license.component';
 import { LicenceTypeComponent } from './licence-type/licence-type.component';
 import { ConfirmvehicleregComponent } from './admindashboard/confirmvehiclereg/confirmvehiclereg.component';
-
+import { OngoingReservationsComponent } from './customerdashboard/ongoing-reservations/ongoing-reservations.component';
+import { VehicleAssistanceComponent } from './admindashboard/vehicle-assistance/vehicle-assistance.component';
+import { AgmCoreModule } from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction';
+import * as html2canvas from 'html2canvas';
+import { ContactpageComponent } from './contactpage/contactpage.component';
+import { AboutpageComponent } from './aboutpage/aboutpage.component';
+import { PushNotificationService } from 'ngx-push-notifications';
+import { PushnotificationComponent } from './pushnotification/pushnotification.component';
+import { NewNavbarComponent } from './new-navbar/new-navbar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,6 +79,13 @@ import { ConfirmvehicleregComponent } from './admindashboard/confirmvehiclereg/c
     LicenseComponent,
     LicenceTypeComponent,
     ConfirmvehicleregComponent,
+    OngoingReservationsComponent,
+    VehicleAssistanceComponent,
+    ContactpageComponent,
+    AboutpageComponent,
+    PushnotificationComponent,
+    NewNavbarComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -86,8 +102,12 @@ import { ConfirmvehicleregComponent } from './admindashboard/confirmvehiclereg/c
     NgQrScannerModule,
     ToastrModule.forRoot(),
     AngularFireDatabaseModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDIr_1mumk0EcpdtP_hT0UCMVTX4b7xy0s'
+    }),
+    AgmDirectionModule,
   ],
-  providers: [AuthService,VehicleService,ServicebookingService],
+  providers: [AuthService,VehicleService,ServicebookingService,PushNotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
